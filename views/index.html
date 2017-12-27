@@ -1,0 +1,179 @@
+<style>
+  @font-face {
+    font-family: manus;
+    src: url("fonts/MNS_TRAIL.otf");
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 40%;
+  }
+
+  video {
+    /*object-fit: cover;*/
+    /*height: auto;
+    vertical-align: middle;*/
+    width: 100%;
+  }
+
+  .overlay-container{
+    position: relative;
+    margin-top:40px;
+  }
+
+  .overlay-title {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    margin-top:-20%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    color: white;
+    font-size: 5vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    /*font-size: 9vw;*/
+    text-align: center;
+  }
+
+  .overlay-desc {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    margin-top: 20%;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'ABeeZee', sans-serif;
+    text-transform: capitalize;
+    font-size: 3vw;
+  }
+
+  .btOnHeader {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    margin-top: 40%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+  main {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  p {
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+  }
+
+  .containMe {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    max-width: 1080px !important;
+  }
+
+
+  .containBlock {
+    display: block !important;
+  }
+
+  .containStyle {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+    font-size: 19px !important;
+    line-height: 24px !important;
+    letter-spacing: undefined !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    color: #484848 !important;
+    border-radius: 4px !important;
+    border: 1px solid #DBDBDB !important;
+    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08) !important;
+    padding: 0px !important;
+    display: table !important;
+    table-layout: fixed !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+
+
+  .navbar .dropdown-menu>li>a {
+    color: #cccccc!important;
+  }
+</style>
+
+
+
+<section class="overlay-container">
+
+  <video loop muted autoplay src="{{ videoMe.video | trustUrl }}" style="opacity: 0.8;">
+      Your browser does not support the video tag.
+  </video>
+
+
+
+  <div class="overlay-title">
+    <h1>{{ videoMe.name | spaceless }}</h1>
+    <h6 class="overlay-desc">{{ videoMe.description }}</h6>
+
+    <div class="btOnHeader">
+      <a ng-href="#/detail/{{videoMe['@path']}}" class="btn-me discover-btn" style="background-color: #e50914;border: none;border-radius: 3px;color: #fff;height: 40px;text-transform: uppercase;font-variant: inherit;/*! font-smooth: always; */width: 100px;text-align: center;padding-top: 8px;padding-bottom: 8px;">
+              Discover
+          </a>
+      <!-- </button> -->
+    </div>
+  </div>
+
+
+
+  </div>
+</section>
+
+
+<div class="mainFrame">
+  <h1 style="text-align:left; font-size:1.6em" class="feat-word">Featured tours</h1>
+  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="location in places">
+    <div class="thumbnail destination-card " style="background-color:#141414;">
+      <div class="hovereffect">
+        <div class="sayWhat destination-images" style="background-image:url({{SCOPE_HOST}}/dam/{{ location.image }})">
+          <div class="caption" id="destination-text">
+            <br>
+            <p>
+              {{ location.description}}
+              <br> Days : {{ location.duration }}
+              <br> Location : {{ location.location }}
+              <!-- <br> Video link: {{ location.video }} -->
+
+            </p>
+          </div>
+        </div>
+        <div class="overlay">
+          <a ng-href="#/detail{{location['@path']}}" class="info" style="text-transform:uppercase;">
+                      Discover
+                  </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

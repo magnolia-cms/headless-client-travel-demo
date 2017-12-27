@@ -1,0 +1,140 @@
+section.intro {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 50px 0;
+  height: 440px;
+  text-align: center;
+  color: white
+  /*background: rgba(0, 0, 0, .6);*/
+  position: relative;
+  /*opacity: 0.5;*/
+  z-index: 5;
+}
+
+.image-container .after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: none;
+  color: #FFF;
+  background: rgba(0, 0, 0, .6);
+}
+
+section.intro .containerMe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1170px;
+}
+
+h1.page-title {
+  font-size: 110px;
+  line-height: 110px;
+  font-family: "ABeeZee";
+  color: #fff;
+  letter-spacing: 0.055em;
+  text-transform: none;
+  font-weight: 400;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 38px;
+}
+
+.row h2 {
+  color: #fff;
+}
+
+.text-danger {
+  color: #e50914 !important;
+}
+
+.row p {
+  color: #fff;
+}
+
+.row .btn {
+  color: #fff !important;
+  /*border-radius: 3px !important;
+    height: 40px !important;
+    font-variant: inherit !important;*/
+}
+
+.row .btn-primary {
+  background-color: #e50914 !important;
+}
+
+.row .btn-primary:hover {
+  background-color: #e50914 !important;
+  border-color: #e50914 !important;
+}
+
+.text-section h3 {
+  color: #fff !important;
+}
+
+.hero-vignette {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0)), color-stop(15%, rgba(20, 20, 20, .15)), color-stop(29%, rgba(20, 20, 20, .35)), color-stop(44%, rgba(20, 20, 20, .58)), color-stop(68%, #141414), to(#141414));
+  background-image: -webkit-linear-gradient(top, rgba(20, 20, 20, 0) 0, rgba(20, 20, 20, .15) 15%, rgba(20, 20, 20, .35) 29%, rgba(20, 20, 20, .58) 44%, #141414 68%, #141414 100%);
+  background-image: -moz-linear-gradient(top, rgba(20, 20, 20, 0) 0, rgba(20, 20, 20, .15) 15%, rgba(20, 20, 20, .35) 29%, rgba(20, 20, 20, .58) 44%, #141414 68%, #141414 100%);
+  background-image: -o-linear-gradient(top, rgba(20, 20, 20, 0) 0, rgba(20, 20, 20, .15) 15%, rgba(20, 20, 20, .35) 29%, rgba(20, 20, 20, .58) 44%, #141414 68%, #141414 100%);
+  background-image: linear-gradient(to bottom, rgba(20, 20, 20, 0) 0, rgba(20, 20, 20, .15) 15%, rgba(20, 20, 20, .35) 29%, rgba(20, 20, 20, .58) 44%, #141414 68%, #141414 100%);
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-position: 0 top;
+  background-repeat: repeat-x;
+  background-color: transparent;
+  width: 100%;
+  height: 22.8vw;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: -17vw;
+}
+
+.thisONeWorks {
+  min-height: 100%;
+  background: radial-gradient(transparent, black), url("http://lorempixel.com/500/500");
+  background-size: cover;
+}
+
+.vignette-layer {
+  z-index: 8;
+}
+
+.jumbotron {
+  background-color: inherit !important;
+}
+
+/*.jumbotron h2 {
+    color: white;
+    font: bold 24px/45px Helvetica, Sans-Serif;
+    letter-spacing: -1px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}*/
+
+.jumbotron h2, .jumbotron p {
+  font: bold 50px/23px Helvetica, Sans-Serif;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: inline;
+  padding: 0.5rem;
+  /* Needs prefixing */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

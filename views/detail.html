@@ -1,0 +1,350 @@
+<style>
+  .img-this {
+    height: auto;
+    width: 100%;
+    opacity: 1.0;
+    margin-bottom: 40px;
+  }
+
+  #map-canvas {
+    height: 440px;
+    padding: 20px;
+    <!-- border: 2px solid #CCC;
+    -->margin-bottom: 20px;
+    background-color: #FFF
+  }
+
+
+  #address {
+    width: 400px;
+  }
+
+  #floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #red;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto', 'sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+  }
+
+  #map-contain {
+    <!-- margin: 70px;
+    -->height: 400px !important;
+  }
+
+  .coverImage {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: 50% 50% !important;
+    height: 320px !important;
+    opacity: 0.5;
+  }
+
+  .text_overlap {
+    position: absolute;
+    z-index: 100;
+    top: 80px;
+    background: black;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  }
+
+  .map_overlap {
+    position: absolute;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    z-index: 100;
+    top: 80px;
+    right: 20px;
+  }
+
+  .containerBox {
+    position: relative;
+    <!-- display: inline-block;
+    -->
+  }
+
+  .book-now-button{
+    margin-bottom:40px;
+    background-color: #e50914;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    height: 40px;
+    text-transform: uppercase;
+    font-variant: inherit;
+    /*! font-smooth: always; */
+  }
+
+  /*.view {
+        background: url("${ctx.contextPath}/.resources/coming-soon/webresources/img/testBar.jpg")no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+      */
+
+  @media only screen and (max-width: 480px),
+  only screen and (max-device-width: 480px) {
+
+
+    .text_overlap {
+      position: static;
+      z-index: 100;
+    }
+
+
+    .map_overlap {
+      position: static;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+      z-index: 100;
+    }
+  }
+
+  @media only screen and (max-width: 1035px),
+  only screen and (max-device-width: 1035px) {
+
+    .text_overlap {
+      position: static;
+      z-index: 100;
+    }
+
+
+    .map_overlap {
+      position: static;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+      z-index: 100;
+    }
+  }
+</style>
+
+<div class="containerBox">
+
+  <div class="view">
+    <img class="img-this " src="{{SCOPE_HOST}}/dam/{{ selectedTour.image }}" alt="tour image" class="detail-img" />
+
+    <!-- <div class="detail-container"> -->
+
+
+    <div class="col-lg-6 col-md-6 text_overlap">
+      <p class="detail-description"><strong>{{ selectedTour.name | spaceless }}</strong></p>
+      <p class="second-description">
+        {{ selectedTour.description }}
+      </p>
+      <p ng-bind-html="selectedTour.body" class="detail-body"> </p>
+      <br>
+      <button type="button" name="button" class="book-now-button" onclick="alert('Ahoy! This feature not implemented in the demo.')">Book Now</button>
+    </div>
+
+
+  <div class="col-lg-6 col-md-6 map_overlap">
+    <div id="map-contain">
+      <div id="map-canvas"></div>
+      <input type="text" id="address" value="{{ selectedTour.location }}">
+    </div>
+  </div>
+
+
+    <!-- </div> -->
+  </div>
+</div>
+
+
+
+
+
+<script>
+  var geocoder;
+  var map;
+
+  function initialize() {
+
+    geocoder = new google.maps.Geocoder();
+    waitForAddress();
+
+  }
+
+
+  function waitForAddress(){
+
+    var address = document.getElementById("address").value;
+    console.log("wait for address:" + address);
+
+    if( address !== ""){
+        loadMapWithAddress(address)
+    }else{
+        setTimeout(waitForAddress, 500);
+    }
+  }
+
+
+
+
+  function loadMapWithAddress(address){
+
+    console.log("address:" + address);
+
+    geocoder.geocode({
+      'address': address
+    }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+
+    var mapOptions = {
+      zoom: 14,
+      scrollwheel: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      styles: [{
+          elementType: 'geometry',
+          stylers: [{
+            color: '#242f3e'
+          }]
+        },
+        {
+          elementType: 'labels.text.stroke',
+          stylers: [{
+            color: '#242f3e'
+          }]
+        },
+        {
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#746855'
+          }]
+        },
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#d59563'
+          }]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#d59563'
+          }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{
+            color: '#263c3f'
+          }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#6b9a76'
+          }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{
+            color: '#38414e'
+          }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry.stroke',
+          stylers: [{
+            color: '#212a37'
+          }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#9ca5b3'
+          }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{
+            color: '#746855'
+          }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{
+            color: '#1f2835'
+          }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#f3d19c'
+          }]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'geometry',
+          stylers: [{
+            color: '#2f3948'
+          }]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#d59563'
+          }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{
+            color: '#17263c'
+          }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{
+            color: '#515c6d'
+          }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.stroke',
+          stylers: [{
+            color: '#17263c'
+          }]
+        }
+      ]
+
+    }
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+    //var transitLayer = new google.maps.TransitLayer();
+    //transitLayer.setMap(map);
+  }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeb31tGP412p_n0PE7J6p6XHcrGOe0FUs&callback=initialize"></script>

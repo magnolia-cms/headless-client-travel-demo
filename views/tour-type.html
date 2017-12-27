@@ -1,0 +1,26 @@
+<script>
+  /*console.log($routeParams.id)*/
+</script>
+<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="xy in related">
+  <div class="thumbnail destination-card " style="background-color:#141414;">
+    <div class="hovereffect">
+      <!-- <img  src="http://localhost:8080/magnoliaAuthor/dam/{{ location.image }}/image.png" > -->
+      <div class="sayWhat destination-images" style="background-image:url({{SCOPE_HOST}}/dam/{{ xy.image }})">
+        <div class="caption" id="destination-text">
+          <br>
+          <p>
+            <br> {{ xy.description}}
+            <br> Days : {{ xy.duration }}
+            <br> Location : {{ xy.location }}
+          </p>
+        </div>
+      </div>
+      <div class="overlay">
+        <a ng-href="#/detail/{{xy['@path']}}" class="info" style="text-transform:uppercase;">
+
+            Discover
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

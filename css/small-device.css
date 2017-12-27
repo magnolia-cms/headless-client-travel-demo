@@ -1,0 +1,76 @@
+h1 {
+  font-size: 26px;
+}
+
+h4 {
+  font-size: 16px;
+  margin-top: 26px;
+}
+
+.text-header h3 {
+  font-size: 28px;
+  margin-top: 10px !important;
+  line-height: 35px !important;
+}
+/*
+.logoMe {
+  width: 90px !important;
+  height: 41px !important;
+}
+*/
+
+.ham {
+  margin-top: 17px;
+}
+
+.discover-btn {
+  height: 32px !important;
+  font-size: 10px !important;
+}
+
+.destination-card {
+  height: 230px !important;
+}
+
+.feat-word {
+  font-size: 1.1em !important;
+}
+
+.destinations {
+  margin-top: 0px;
+}
+
+.weekend {
+  margin-top: 33px !important;
+}
+
+.weekend h3 {
+  text-align: center;
+}
+
+.weekend h4 {
+  visibility: hidden;
+  display: none;
+}
+
+.detail-page {
+  margin-top: 0px;
+  margin-right: 0px;
+}
+
+.detail-img {
+  margin-left: 0px;
+  margin-top: 30px;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.checkout-sum {
+  padding: 2px;
+}
+
+.form-submit {
+  font-size: 18px;
+}

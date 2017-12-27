@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xml:lang="${cmsfn.language()}" lang="${cmsfn.language()}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+  <meta name="description" />
+  <meta name="keywords" />
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/marketing.css">
+  <link rel="stylesheet" type="text/css" media="only screen and (max-width: 1035px), only screen and (max-device-width: 1035px)" href="css/med-device.css" />
+  <link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="css/small-device.css" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway|ABeeZee" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+
+
+</head>
+
+
+
+<script src="app-config.js" async="false"></script>
+
+
+
+<body>
+
+  <div ng-app="myApp" ng-controller="myCtrl">
+
+    <nav class="navbar navbar-inverse  navbar-fixed-top">
+
+      <div class="container-fluid">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header" role="navigation">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+          <a class="navbar-brand" href="#/">
+                        <img src="img/logo_red.png" class="logoMe ">
+                    </a>
+        </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse  " id="myNavbar">
+
+          <ul class="nav navbar-nav navbar-inverse">
+
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">Tour Types <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="x in touring | unique:'name'" role="presentation"><a style="text-transform:capitalize;" ng-href="#/tour-type/{{x['@id']}}">{{ x.name }}</a></li>
+              </ul>
+            </li>
+
+            <li><a ng-href="#/hotdeal/">Hot Deals</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+
+
+    <div ng-view style="margin-top:40px;">
+    </div>
+
+  </div>
+
+
+
+
+  <script>
+    (function() {
+      var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ngCookies', 'ui', 'ui.filters']);
+
+      app.config(function($routeProvider, $cookiesProvider) {
+
+        $routeProvider
+          .when('/', {
+            templateUrl: 'views/index.html',
+            controller: 'myCtrl'
+          })
+          .when('/hotdeal/', {
+            templateUrl: 'views/hotdeal.html',
+            controller: 'DealController'
+          })
+          .when('/tour-type/:id', {
+            templateUrl: 'views/tour-type.html',
+            controller: 'TourController'
+          })
+          .when('/detail/:id*', {
+            templateUrl: 'views/detail.html',
+            controller: 'DetailController'
+          });
+      })
+
+      app.controller('myCtrl', ['$scope', '$http', '$window',
+        function($scope, $http, $window) {
+
+          $scope.SCOPE_HOST = window.HOST;
+
+          $http.get(URL_TOURS_FEATURED)
+            .then(function(response) {
+
+              $scope.places = response.data.results;
+
+              // Search for a hilighted item with a video.
+              $scope.places.forEach(function(item) {
+                if (item.video != null && item.highlight === 'true') {
+                  $scope.videoMe = item;
+                  //console.log($scope.videoMe)
+                }
+              });
+              // Fallback item and video in case none were found.
+              if ($scope.videoMe == undefined) {
+                $scope.videoMe = $scope.places[5];
+                $scope.videoMe.video = "img/Aurora-Borealis.mp4";
+                //console.log($scope.videoMe);
+              }
+
+              $http.get(URL_CATEGORIES)
+                .then(function(response) {
+                  $scope.touring = response.data.results;
+
+                })
+            })
+
+        }
+      ]);
+
+      app.filter("trustUrl", ['$sce', function($sce) {
+        return function(videoURL) {
+          return $sce.trustAsResourceUrl(videoURL);
+        };
+      }]);
+
+      app.filter("spaceless", function() {
+        return function(input) {
+          if (input) {
+            return input.replace(/-/g, " ");
+          }
+        }
+      });
+
+      app.controller('TourController', ['$scope', '$routeParams', '$http',
+        function($scope, $routeParams, $http) {
+          $scope.SCOPE_HOST = window.HOST;
+
+          var tourTypeId = $routeParams.id;
+          console.log(tourTypeId)
+
+          $http.get(URL_TOURS_BY_CATEGORY + tourTypeId)
+            .then(function(response) {
+              $scope.related = response.data.results;
+              // console.log($scope.related)
+            });
+        }
+      ]);
+
+
+      app.controller('DealController', function($scope, $http) {
+
+        $http.get(URL_DEALS_1)
+          .then(function(response) {
+            $scope.headContent = response.data;
+            //console.log($scope.headContent)
+          })
+
+        $http.get(URL_DEALS_2)
+          .then(function(response) {
+            $scope.content = response.data;
+            //console.log($scope.content)
+          })
+
+      });
+
+      app.controller('DetailController', ['$scope', '$routeParams', '$cookies', '$location', '$http',
+        function($scope, $routeParams, $cookies, $location, $http, $sanitize) {
+
+          $scope.SCOPE_HOST = window.HOST;
+
+          var detailId = $routeParams.id;
+          //console.log("detail!" + detailId)
+
+          $http.get(URL_TOURS + detailId)
+            .then(function(response) {
+              $scope.selectedTour = response.data;
+              //console.log($scope.selectedTour.body)
+            });
+          $scope.limit = 200;
+          $scope.lessText = "Read less";
+          $scope.moreText = "Read more";
+          $scope.dotsClass = "toggle-dots-grey";
+          $scope.linkClass = "toggle-link-yellow";
+        }
+      ])
+
+
+    })();
+  </script>
+
+  <script>
+    // Auto-collapse navbar when clicking on link.
+    $('.navbar-collapse').on("click", "a:not(.dropdown-toggle)", function() {
+      //console.log('collapse.');
+      $(this).parents('.navbar-collapse').collapse('hide');
+    });
+  </script>
+
+</body>
+
+</html>

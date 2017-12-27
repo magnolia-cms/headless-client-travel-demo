@@ -1,0 +1,44 @@
+.weekend h4 {
+  display: none;
+}
+
+#weekend-text {
+  font-size: 20px !important;
+}
+
+.detail-img {
+  margin-left: 0px;
+}
+
+.checkout-sum {
+  border-radius: 0px;
+  background-color: none;
+  color: black;
+  padding: 8px;
+  border: 0px;
+}
+
+.more-show-hide {
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+
+.more-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.toggle-dots-grey {
+  color: darkgrey;
+}
+
+.toggle-dots-yellow {
+  color: yellow;
+}
+
+.toggle-link-yellow {
+  color: yellow;
+}
+
+.toggle-link-grey {
+  color: darkgrey;
+}
