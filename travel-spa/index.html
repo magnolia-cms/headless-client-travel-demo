@@ -61,7 +61,7 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">Tour Types <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li ng-repeat="x in touring | unique:'name'" role="presentation"><a style="text-transform:capitalize;" ng-href="#/tour-type/{{x['@id']}}">{{ x.name }}</a></li>
+                <li ng-repeat="category in categories | unique:'name'" role="presentation"><a style="text-transform:capitalize;" ng-href="#/tour-type/{{category['@id']}}">{{ category.name }}</a></li>
               </ul>
             </li>
 
@@ -100,7 +100,7 @@
           })
           .when('/tour-type/:id', {
             templateUrl: 'views/tour-type.html',
-            controller: 'TourController'
+            controller: 'TourTypeController'
           })
           .when('/detail/:id*', {
             templateUrl: 'views/detail.html',
@@ -114,7 +114,7 @@
 
           $http.get(URL_CATEGORIES)
             .then(function(response) {
-              $scope.touring = response.data.results;
+              $scope.categories = response.data.results;
           })
 
         }
@@ -128,18 +128,19 @@
           $http.get(URL_TOURS_FEATURED)
             .then(function(response) {
 
-              $scope.places = response.data.results;
+              $scope.tours = response.data.results;
 
               // Search for a hilighted item with a video.
-              $scope.places.forEach(function(item) {
-                if (item.video != null && item.highlight === 'true') {
-                  $scope.videoMe = item;
+              $scope.tours.forEach(function(tour) {
+                if (tour.video != null && tour.highlight === 'true') {
+                  $scope.videoMe = tour;
                   //console.log($scope.videoMe)
                 }
               });
+
               // Fallback item and video in case none were found.
               if ($scope.videoMe == undefined) {
-                $scope.videoMe = $scope.places[5];
+                $scope.videoMe = $scope.tours[5];
                 $scope.videoMe.video = "img/Aurora-Borealis.mp4";
                 //console.log($scope.videoMe);
               }
@@ -150,7 +151,7 @@
         }
       ]);
 
-      app.controller('TourController', ['$scope', '$routeParams', '$http',
+      app.controller('TourTypeController', ['$scope', '$routeParams', '$http',
         function($scope, $routeParams, $http) {
           $scope.SCOPE_HOST = window.HOST;
 
@@ -159,7 +160,7 @@
 
           $http.get(URL_TOURS_BY_CATEGORY + tourTypeId)
             .then(function(response) {
-              $scope.related = response.data.results;
+              $scope.tours = response.data.results;
               // console.log($scope.related)
             });
         }
@@ -192,7 +193,7 @@
 
           $http.get(URL_TOURS + detailId)
             .then(function(response) {
-              $scope.selectedTour = response.data;
+              $scope.tour = response.data;
               //console.log($scope.selectedTour.body)
             });
           $scope.limit = 200;

@@ -132,17 +132,17 @@
 <div class="containerBox">
 
   <div class="view">
-    <img class="img-this " src="{{SCOPE_HOST}}/dam/{{ selectedTour.image }}" alt="tour image" class="detail-img" />
+    <img class="img-this " src="{{SCOPE_HOST}}/dam/{{ tour.image }}" alt="tour image" class="detail-img" />
 
     <!-- <div class="detail-container"> -->
 
 
     <div class="col-lg-6 col-md-6 text_overlap">
-      <p class="detail-description"><strong>{{ selectedTour.name | spaceless }}</strong></p>
+      <p class="detail-description"><strong>{{ tour.name | spaceless }}</strong></p>
       <p class="second-description">
-        {{ selectedTour.description }}
+        {{ tour.description }}
       </p>
-      <p ng-bind-html="selectedTour.body" class="detail-body"> </p>
+      <p ng-bind-html="tour.body" class="detail-body"> </p>
       <br>
       <button type="button" name="button" class="book-now-button" onclick="alert('Ahoy! This feature not implemented in the demo.')">Book Now</button>
     </div>
@@ -151,7 +151,7 @@
   <div class="col-lg-6 col-md-6 map_overlap">
     <div id="map-contain">
       <div id="map-canvas"></div>
-      <input type="text" id="address" value="{{ selectedTour.location }}">
+      <input type="text" id="address" value="{{ tour.location }}">
     </div>
   </div>
 

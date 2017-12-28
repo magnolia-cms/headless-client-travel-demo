@@ -150,23 +150,23 @@
 
 <div class="mainFrame">
   <h1 style="text-align:left; font-size:1.6em" class="feat-word">Featured tours</h1>
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="location in places">
+  <div ng-repeat="tour in tours" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 repeated-item" >
     <div class="thumbnail destination-card " style="background-color:#141414;">
       <div class="hovereffect">
-        <div class="sayWhat destination-images" style="background-image:url({{SCOPE_HOST}}/dam/{{ location.image }})">
+        <div class="sayWhat destination-images" style="background-image:url({{SCOPE_HOST}}/dam/{{ tour.image }})">
           <div class="caption" id="destination-text">
             <br>
             <p>
-              {{ location.description}}
-              <br> Days : {{ location.duration }}
-              <br> Location : {{ location.location }}
-              <!-- <br> Video link: {{ location.video }} -->
+              {{ tour.description}}
+              <br> {{ tour.duration }} Days
+              <br> {{ tour.location }}
+              <!-- <br> Video link: {{ tour.video }} -->
 
             </p>
           </div>
         </div>
         <div class="overlay">
-          <a ng-href="#/detail{{location['@path']}}" class="info" style="text-transform:uppercase;">
+          <a ng-href="#/detail{{tour['@path']}}" class="info" style="text-transform:uppercase;">
                       Discover
                   </a>
         </div>
