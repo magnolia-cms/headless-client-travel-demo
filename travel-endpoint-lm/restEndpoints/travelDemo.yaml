@@ -1,0 +1,93 @@
+class: info.magnolia.rest.delivery.jcr.v1.JcrDeliveryEndpointDefinition
+params:
+
+  tourTypes:
+    workspace: category
+    rootPath: /tour-types
+    nodeTypes:
+      0: mgnl:category
+    includeSystemProperties: false
+    bypassWorkspaceAcls: false
+    limit: 20
+
+  destinations:
+    workspace: category
+    rootPath: /destinations
+    nodeTypes:
+      0: mgnl:category
+    includeSystemProperties: false
+    bypassWorkspaceAcls: false
+    limit: 20
+
+  tags:
+    nodeTypes:
+      0: mgnl:tag
+    includeSystemProperties: false
+    bypassWorkspaceAcls: true
+    limit: 10
+
+  tours:
+    nodeTypes:
+      0: mgnl:content
+    includeSystemProperties: false
+    bypassWorkspaceAcls: false
+    limit: 50
+    references:
+      tourTypes:
+        propertyName: tourTypes
+        referenceResolver:
+          implementationClass: info.magnolia.rest.reference.jcr.UuidReferenceResolver
+          targetWorkspace: category
+      destinations:
+        propertyName: destination
+        referenceResolver:
+          implementationClass: info.magnolia.rest.reference.jcr.UuidReferenceResolver
+          targetWorkspace: category
+
+  stories:
+    depth: 1
+    nodeTypes:
+      0: mgnl:composition
+    childNodeTypes:
+      0: mgnl:block
+    includeSystemProperties: true #Needed to get the block types.
+    bypassWorkspaceAcls: false
+    limit: 30
+    references:
+      tours:
+        propertyName: tours
+        referenceResolver:
+          implementationClass: info.magnolia.rest.reference.jcr.UuidReferenceResolver
+          targetWorkspace: tours
+      stories:
+        propertyName: stories
+        referenceResolver:
+          implementationClass: info.magnolia.rest.reference.jcr.UuidReferenceResolver
+          targetWorkspace: stories
+
+  storyBlocks:
+    workspace: stories
+    nodeTypes:
+      0: mgnl:block
+    includeSystemProperties: true #Needed to get the block types.
+    bypassWorkspaceAcls: false
+    limit: 50
+    references:
+      tours:
+        propertyName: tours
+        referenceResolver:
+          implementationClass: info.magnolia.rest.reference.jcr.UuidReferenceResolver
+          targetWorkspace: tours
+
+  pagesWithComponents:
+    workspace: website
+    rootPath: /travel
+    depth: 6
+    nodeTypes:
+      0: mgnl:page
+    childNodeTypes:
+      1: mgnl:area
+      2: mgnl:component
+    includeSystemProperties: true
+    bypassWorkspaceAcls: false
+    limit: 100
