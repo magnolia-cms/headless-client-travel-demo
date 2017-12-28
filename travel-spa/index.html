@@ -34,7 +34,7 @@
 
 <body>
 
-  <div ng-app="myApp" ng-controller="myCtrl">
+  <div ng-app="myApp" ng-controller="NavController">
 
     <nav class="navbar navbar-inverse  navbar-fixed-top">
 
@@ -89,9 +89,10 @@
       app.config(function($routeProvider, $cookiesProvider) {
 
         $routeProvider
+
           .when('/', {
             templateUrl: 'views/index.html',
-            controller: 'myCtrl'
+            controller: 'HomeController'
           })
           .when('/hotdeal/', {
             templateUrl: 'views/hotdeal.html',
@@ -105,9 +106,21 @@
             templateUrl: 'views/detail.html',
             controller: 'DetailController'
           });
+
       })
 
-      app.controller('myCtrl', ['$scope', '$http', '$window',
+      app.controller('NavController', ['$scope',  '$http',
+        function($scope, $http) {
+
+          $http.get(URL_CATEGORIES)
+            .then(function(response) {
+              $scope.touring = response.data.results;
+          })
+
+        }
+      ]);
+
+      app.controller('HomeController', ['$scope', '$http', '$window',
         function($scope, $http, $window) {
 
           $scope.SCOPE_HOST = window.HOST;
@@ -131,29 +144,11 @@
                 //console.log($scope.videoMe);
               }
 
-              $http.get(URL_CATEGORIES)
-                .then(function(response) {
-                  $scope.touring = response.data.results;
 
-                })
             })
 
         }
       ]);
-
-      app.filter("trustUrl", ['$sce', function($sce) {
-        return function(videoURL) {
-          return $sce.trustAsResourceUrl(videoURL);
-        };
-      }]);
-
-      app.filter("spaceless", function() {
-        return function(input) {
-          if (input) {
-            return input.replace(/-/g, " ");
-          }
-        }
-      });
 
       app.controller('TourController', ['$scope', '$routeParams', '$http',
         function($scope, $routeParams, $http) {
@@ -209,16 +204,32 @@
       ])
 
 
-    })();
-  </script>
+      app.filter("trustUrl", ['$sce', function($sce) {
+        return function(videoURL) {
+          return $sce.trustAsResourceUrl(videoURL);
+        };
+      }]);
 
-  <script>
-    // Auto-collapse navbar when clicking on link.
-    $('.navbar-collapse').on("click", "a:not(.dropdown-toggle)", function() {
-      //console.log('collapse.');
-      $(this).parents('.navbar-collapse').collapse('hide');
-    });
-  </script>
+      app.filter("spaceless", function() {
+        return function(input) {
+          if (input) {
+            return input.replace(/-/g, " ");
+          }
+        }
+      });
+
+
+    })();
+</script>
+
+
+<script>
+  // Auto-collapse navbar when clicking on link.
+  $('.navbar-collapse').on("click", "a:not(.dropdown-toggle)", function() {
+    //console.log('collapse.');
+    $(this).parents('.navbar-collapse').collapse('hide');
+  });
+</script>
 
 </body>
 
