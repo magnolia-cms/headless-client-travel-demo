@@ -61,7 +61,7 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">Tour Types <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li ng-repeat="category in categories | unique:'name'" role="presentation"><a style="text-transform:capitalize;" ng-href="#/tour-type/{{category['@id']}}">{{ category.name }}</a></li>
+                <li ng-repeat="category in categories | unique:'name'" role="presentation"><a style="text-transform:capitalize;" ng-href="#/tour-type/{{category.name}}/{{category['@id']}}">{{ category.name }}</a></li>
               </ul>
             </li>
 
@@ -98,7 +98,7 @@
             templateUrl: 'views/hotdeal.html',
             controller: 'DealController'
           })
-          .when('/tour-type/:id', {
+          .when('/tour-type/:name/:id', {
             templateUrl: 'views/tour-type.html',
             controller: 'TourTypeController'
           })
@@ -161,6 +161,7 @@
           $http.get(URL_TOURS_BY_CATEGORY + tourTypeId)
             .then(function(response) {
               $scope.tours = response.data.results;
+              $scope.tourTypeName = $routeParams.name;
               // console.log($scope.related)
             });
         }

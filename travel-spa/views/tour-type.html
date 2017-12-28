@@ -1,10 +1,14 @@
 <script>
   /*console.log($routeParams.id)*/
 </script>
+
+<div class="col-lg-12">
+  <h1 style="padding:15px 0; text-transform: capitalize;">{{tourTypeName}}</h1>
+</div>
+
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="tour in tours">
   <div class="thumbnail destination-card " style="background-color:#141414;">
     <div class="hovereffect">
-      <!-- <img  src="http://localhost:8080/magnoliaAuthor/dam/{{ location.image }}/image.png" > -->
       <div class="sayWhat destination-images" style="background-image:url({{SCOPE_HOST}}/dam/{{ tour.image }})">
         <div class="caption" id="destination-text">
           <br>
