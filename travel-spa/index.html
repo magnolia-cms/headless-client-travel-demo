@@ -83,7 +83,7 @@
 
 
   <script>
-    (function() {
+    function startAngular() {
       var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ngCookies', 'ui', 'ui.filters']);
 
       app.config(function($routeProvider, $cookiesProvider) {
@@ -220,8 +220,13 @@
         }
       });
 
+    }
+    
+    //Wait till all scripts are loaded to ensure app-config.js has loaded.
+    document.addEventListener("DOMContentLoaded", function(event) {
+      startAngular();
+    });
 
-    })();
 </script>
 
 
