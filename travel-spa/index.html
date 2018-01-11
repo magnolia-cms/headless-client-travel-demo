@@ -8,6 +8,25 @@
   <meta name="description" />
   <meta name="keywords" />
 
+<script>
+  // For simplicity - configure the system with a window global.
+
+  // Use the public Magnolia demo.
+  var MA_CONFIG = {};
+
+  MA_CONFIG.HOST = "https://demopublic.magnolia-cms.com";
+  MA_CONFIG.REST_HOST = "https://demopublic.magnolia-cms.com"
+
+  MA_CONFIG.URL_CATEGORIES =        MA_CONFIG.REST_HOST + "/.rest/delivery/tourTypes/v1/"
+  MA_CONFIG.URL_TOURS_BY_CATEGORY = MA_CONFIG.REST_HOST + "/.rest/delivery/tours/v1/?tourTypes="
+  MA_CONFIG.URL_TOURS =             MA_CONFIG.REST_HOST + "/.rest/delivery/tours/v1/"
+  MA_CONFIG.URL_TOURS_FEATURED =    MA_CONFIG.REST_HOST + "/.rest/delivery/tours/v1/?isFeatured=true"
+  MA_CONFIG.URL_DEALS_1 =           "mock-data/deal1.html"
+  MA_CONFIG.URL_DEALS_2 =           "mock-data/deal2.html"
+
+
+</script>
+
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/marketing.css">
@@ -25,10 +44,6 @@
 
 
 </head>
-
-
-
-<script src="app-config.js" async="false"></script>
 
 
 
@@ -83,8 +98,8 @@
 
 
   <script>
-    function startAngular() {
-      var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ngCookies', 'ui', 'ui.filters']);
+  (function() {
+    var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ngCookies', 'ui', 'ui.filters']);
 
       app.config(function($routeProvider, $cookiesProvider) {
 
@@ -112,7 +127,7 @@
       app.controller('NavController', ['$scope',  '$http',
         function($scope, $http) {
 
-          $http.get(URL_CATEGORIES)
+          $http.get(MA_CONFIG.URL_CATEGORIES)
             .then(function(response) {
               $scope.categories = response.data.results;
           })
@@ -123,9 +138,9 @@
       app.controller('HomeController', ['$scope', '$http', '$window',
         function($scope, $http, $window) {
 
-          $scope.SCOPE_HOST = window.HOST;
+          $scope.SCOPE_HOST = MA_CONFIG.HOST;
 
-          $http.get(URL_TOURS_FEATURED)
+          $http.get(MA_CONFIG.URL_TOURS_FEATURED)
             .then(function(response) {
 
               $scope.tours = response.data.results;
@@ -153,12 +168,12 @@
 
       app.controller('TourTypeController', ['$scope', '$routeParams', '$http',
         function($scope, $routeParams, $http) {
-          $scope.SCOPE_HOST = window.HOST;
+          $scope.SCOPE_HOST = MA_CONFIG.HOST;
 
           var tourTypeId = $routeParams.id;
           console.log(tourTypeId)
 
-          $http.get(URL_TOURS_BY_CATEGORY + tourTypeId)
+          $http.get(MA_CONFIG.URL_TOURS_BY_CATEGORY + tourTypeId)
             .then(function(response) {
               $scope.tours = response.data.results;
               $scope.tourTypeName = $routeParams.name;
@@ -170,13 +185,13 @@
 
       app.controller('DealController', function($scope, $http) {
 
-        $http.get(URL_DEALS_1)
+        $http.get(MA_CONFIG.URL_DEALS_1)
           .then(function(response) {
             $scope.headContent = response.data;
             //console.log($scope.headContent)
           })
 
-        $http.get(URL_DEALS_2)
+        $http.get(MA_CONFIG.URL_DEALS_2)
           .then(function(response) {
             $scope.content = response.data;
             //console.log($scope.content)
@@ -187,12 +202,12 @@
       app.controller('DetailController', ['$scope', '$routeParams', '$cookies', '$location', '$http',
         function($scope, $routeParams, $cookies, $location, $http, $sanitize) {
 
-          $scope.SCOPE_HOST = window.HOST;
+          $scope.SCOPE_HOST = MA_CONFIG.HOST;
 
           var detailId = $routeParams.id;
           //console.log("detail!" + detailId)
 
-          $http.get(URL_TOURS + detailId)
+          $http.get(MA_CONFIG.URL_TOURS + detailId)
             .then(function(response) {
               $scope.tour = response.data;
               //console.log($scope.selectedTour.body)
@@ -220,13 +235,7 @@
         }
       });
 
-    }
-
-    //Wait till all scripts are loaded to ensure app-config.js has loaded.
-    document.addEventListener("load", function(event) {
-      startAngular();
-    });
-
+  })();
 </script>
 
 
