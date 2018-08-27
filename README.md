@@ -1,6 +1,7 @@
 # headless-client-travel-demo - A demonstration of a headless client for the standard Magnolia travel demo
 
-See an example of headless client getting content from a Magnolia server via the new delivery REST endpoints introduced in Magnolia CMS version 5.6
+See an example of headless client getting content from a Magnolia server via the new delivery REST endpoints introduced in Magnolia CMS version 5.6.
+
 
 ## Features
 
@@ -18,6 +19,8 @@ Uses the delivery endpoint in a variety of ways:
 Uses the text location of a tour and the Google geocode service to provide a map of the location.
 
 ## Usage
+Note that this version is compatible with Magnolia version 5.7
+
 The files in the `travel-spa` directory are the full single-page-app which can be run on any http server.
 By default the client will use the Magnolia publicly hosted demo running at https://demopublic.magnolia-cms.com for its content.
 
